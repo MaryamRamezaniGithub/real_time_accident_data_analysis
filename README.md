@@ -36,7 +36,7 @@ Kafka is a crucial tool for data streaming, particularly in Big Data contexts, a
 
 ksqlDB is a database specifically designed for stream processing applications on top of Apache Kafka. It allows us to treat Kafka topics like traditional tables in relational databases, enabling SQL-like queries on streaming data. This makes it easier to process and analyze data in real-time.
 
-![](C:\Users\Mediamonster\Downloads\1.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\1.jpg)
 
 ksqlDB's storage is based on two main structures: Streams and Tables.
 
@@ -44,7 +44,7 @@ ksqlDB's storage is based on two main structures: Streams and Tables.
 
 **Tables**, in contrast, are mutable collections that represent the current state or snapshot of a dataset. They use primary keys to manage data. When a table receives messages, it updates to store only the latest value for each key, reflecting the most recent state.
 
-![](C:\Users\Mediamonster\Downloads\2.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\2.jpg)
 
 Despite their differences, Streams and Tables in ksqlDB are both based on Kafka's basic topic structure.
 
@@ -62,7 +62,7 @@ The main idea of this project is to use ksqlDB to create a streaming ETL pipelin
 
 For long-term storage, we’ll be using MongoDB.
 
-![](C:\Users\Mediamonster\Downloads\3.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\3.jpg)
 
 In addition to Streams and Tables, we’ll also use database connectors to move data between layers. These connectors manage the transfer of records from a database (in this case, MongoDB) to Kafka topics, a process known as Change Data Capture (CDC), and vice versa.
 
@@ -91,7 +91,7 @@ To set up the environment for this project, follow the instructions from the off
 
   Then, the containers can be started normally with *docker-compose up.*
 
-![](C:\Users\Mediamonster\Downloads\4.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\4.jpg)
 
 After that, connect to the MongoDB shell with the command *mongo -u mongo -p mongo* inside the container and start the database with *rs.initiate()*.
 
@@ -103,7 +103,7 @@ For simplicity, we’ll create the records directly on the bronze layer.
 
 This layer will be represented by a MongoDB collection named *accidents_bronze* inside the *accidents* database.
 
-![](C:\Users\Mediamonster\Downloads\5.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\5.jpg)
 
 To move records from MongoDB to ksqlDB, you'll need to configure a source connector. This connector monitors the MongoDB collection and streams any changes—such as insertions, deletions, and updates—as structured messages (in AVRO or JSON) to a Kafka topic.
 
@@ -117,7 +117,7 @@ To move records from MongoDB to ksqlDB, you'll need to configure a source connec
 
    Replace `<ksqlDB_container_name>` with the name of your ksqlDB container. If everything goes well, you should see a big KSQLDB on your screen with a ‘RUNNING’ message.
 
-   ![](C:\Users\Mediamonster\Downloads\6.jpg)
+   ![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\6.jpg)
 
    Before continuing, we need to run the following command
 
@@ -125,7 +125,7 @@ To move records from MongoDB to ksqlDB, you'll need to configure a source connec
 
 Then, creating a connector is just a matter of describing some configurations.
 
-![](C:\Users\Mediamonster\Downloads\7.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\7.jpg)
 
 The command opens with the CREATE SOURCE CONNECTOR clause, followed by the connector name and configurations. The WITH clause specifies the configurations used.
 
@@ -137,11 +137,11 @@ Then, we define which collections in our database will be watched.
 
 Finally, the *transforms* parameter specifies a simplification in the messages produced by the Debezium connector and the *errors.tolerance* defines the connector behavior for messages that produce errors (the default behavior is to halt the execution).
 
-![](C:\Users\Mediamonster\Downloads\8.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\8.jpg)
 
 With the connector created, let’s execute a DESCRIBE CONNECTOR query to see its current status. Any errors that occur in its execution should be prompted here.
 
-![](C:\Users\Mediamonster\Downloads\9.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\9.jpg)
 
 Now that our connector is running, it will start streaming all the changes in the *accidents_bronze* collection to the topic
 **replica-set.accidents.accidents_bronze**.
@@ -152,9 +152,9 @@ Defining a STREAM in ksqlDB is almost equal to creating a table in SQL. You need
 
 In our case, we need to configure which topic will feed our stream. Because of that, the column’s names and types should match the fields in the original topic messages.
 
-![](C:\Users\Mediamonster\Downloads\10.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\10.jpg)
 
-![](C:\Users\Mediamonster\Downloads\11.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\11.jpg)
 
 ### Recap of What We’ve Done So Far
 
@@ -165,15 +165,15 @@ With the STREAM now set up, you can run `SELECT` queries to analyze the data. Th
 
 For example, let’s select the *data* and *id* of each message.
 
-![](C:\Users\Mediamonster\Downloads\12.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\12.jpg)
 
-![](C:\Users\Mediamonster\Downloads\13.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\13.jpg)
 
 In ksqlDB, these normal SQL statements are called [PULL QUERIES](https://docs.ksqldb.io/en/latest/developer-guide/ksqldb-reference/select-pull-query/), because they return a response based on the stream's current state and finishes.
 
 By adding EMIT CHANGES at the end of a PULL QUERY it is turned into a [PUSH QUERIES](https://docs.ksqldb.io/en/latest/developer-guide/ksqldb-reference/select-push-query/). Unlike its counterpart, it never finishes, and it is always computing new rows based on the arriving messages. Let’s see this working.
 
-![](C:\Users\Mediamonster\Downloads\14.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\14.jpg)
 
 On the left, we have the PUSH QUERY and on the right, a simple python script inserting records in MongoDB. As new records are inserted, they automatically pop up in the query’s answer.
 
@@ -201,11 +201,11 @@ Let’s see this working.
 
 For example, if we want a new STREAM containing only the *_id* and *date* where it is not null, we could make this:
 
-![](C:\Users\Mediamonster\Downloads\15.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\15.jpg)
 
 Using this functionality, it’s possible to create a transformation (*bronze_to_silver*) STREAM that is responsible for selecting and cleaning the messages from the bronze stream.
 
-![](C:\Users\Mediamonster\Downloads\16.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\16.jpg)
 
 Our example needs to clean the fields: **sexo** (gender), **tipo_acidente** (accident type), **ilesos** (unhurt), **feridos_leves** (lightly injured), **feridos_graves** (strongly_injured), **mortos** (dead), and **data_inversa** (date).
 
@@ -220,21 +220,21 @@ After looking into the database (I’ve made this offscreen), it is possible to 
 
 The fix to these problems are implemented in the **accidents_bronze_to_silver** STREAM defined below:
 
-![](C:\Users\Mediamonster\Downloads\17.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\17.jpg)
 
 We’re able to build a powerful transformation process over a stream of messages with (almost) only SQL knowledge!
 
-![](C:\Users\Mediamonster\Downloads\18.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\18.jpg)
 
 The final step is to save the data in MongoDB using a **Sink Connector**.
 
-![](C:\Users\Mediamonster\Downloads\19.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\19.jpg)
 
 For the connector above, the Kafka MongoDB connector is used, and the rest of the configurations are self-explanatory.
 
 The *accidents_silver* is automatically created, and the results can be seen below.
 
-![](C:\Users\Mediamonster\Downloads\20.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\20.jpg)
 
 ## **Gold Layer for Business Rules and Aggregations**
 
@@ -254,29 +254,29 @@ In ksqlDB, aggregations can only be made in PUSH QUERIES, so ‘EMIT CHANGES’ 
 
 Let’s start with the monthly aggregated table.
 
-![](C:\Users\Mediamonster\Downloads\21.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\21.jpg)
 
 As new records are inserted, the table  automatically updates the counts of each month. Let’s see the results closely.
 
-![](C:\Users\Mediamonster\Downloads\22.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\22.jpg)
 
 The same logic goes for the death rate table, where we calculate the probability of dying in each type of accident.
 
-![](C:\Users\Mediamonster\Downloads\23.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\23.jpg)
 
-![](C:\Users\Mediamonster\Downloads\24.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\24.jpg)
 
 Finally, all that rest is to save each table in their respective MongoDB collection.
 
-![](C:\Users\Mediamonster\Downloads\25.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\25.jpg)
 
 This sink connector has some different configurations (*transforms* and *document.id.strategy*) used to create an *_id* field in MongoDB matching the table’s primary key.
 
-![](C:\Users\Mediamonster\Downloads\26.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\26.jpg)
 
 And the results should start showing up in the collections.
 
-![](C:\Users\Mediamonster\Downloads\27.jpg)
+![](C:\Users\Mediamonster\Downloads\real_time_accident_data_analysis\27.jpg)
 
 ### Conclusion
 
@@ -295,13 +295,23 @@ Thank you for reading! 😉
 # References
 
 > *All the code is available in this* [*GitHub repository*](https://github.com/jaumpedro214/posts/tree/main/real_time_analysis_accidents)*.*
+>
+> 
 
 [1] [Medallion Architecture](https://www.databricks.com/glossary/medallion-architecture) — Databricks Glossary
+
 [2] [What is the medallion lakehouse architecture?](https://learn.microsoft.com/en-us/azure/databricks/lakehouse/medallion) — Microsoft Learn
+
 [3] [Streaming ETL pipeline ](https://docs.ksqldb.io/en/latest/tutorials/etl/)— ksqlDB official documentation
+
 [4] [Streams and Tables ](https://developer.confluent.io/learn-kafka/ksqldb/streams-and-tables/)— Confluent ksqlDB tutorial
+
 [5] [Featuring Apache Kafka in the Netflix Studio and Finance World ](https://www.confluent.io/blog/how-kafka-is-used-by-netflix/)— Confluent blog
+
 [6] [MongoDB Kafka Sink connector](https://www.mongodb.com/docs/kafka-connector/current/sink-connector/) — Official Mongo Docs
+
 [7] [MongoDB source and sink connector](https://www.confluent.io/hub/mongodb/kafka-connect-mongodb) — Confluent Hub
+
 [8] [Sink Connector Post Processors, configure document id in sink connector ](https://www.mongodb.com/docs/kafka-connector/current/sink-connector/fundamentals/post-processors/#configure-the-document-id-adder-post-processor)— Official Mongo Docs
+
 [9] [Presto® on Apache Kafka® At Uber Scale ](https://www.uber.com/en-TT/blog/presto-on-apache-kafka-at-uber-scale/)— Uber Blog
