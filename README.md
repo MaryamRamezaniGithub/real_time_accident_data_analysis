@@ -48,7 +48,7 @@ ksqlDB's storage is based on two main structures: Streams and Tables.
 
 **Tables**, in contrast, are mutable collections that represent the current state or snapshot of a dataset. They use primary keys to manage data. When a table receives messages, it updates to store only the latest value for each key, reflecting the most recent state.
 
-![](C:\Users\Mediamonster\Downloads\2.jpg)
+![2](https://github.com/user-attachments/assets/77745eff-9b8f-4e2d-bce3-f9772d4bb0a1)
 
 Despite their differences, Streams and Tables in ksqlDB are both based on Kafka's basic topic structure.
 
