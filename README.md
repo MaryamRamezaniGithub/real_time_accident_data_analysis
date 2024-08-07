@@ -294,8 +294,8 @@ Thank you for reading! 😉
 
 # References
 
-> *All the code is available in this* [*GitHub repository*]([https://github.com/MaryamRamezaniGithub/real_time_accident_data_analysis])*.*
->
+> *All the code is available in this* [*GitHub repository*](https://github.com/MaryamRamezaniGithub/real_time_accident_data_analysis)
+> 
 
 [1] [Medallion Architecture](https://www.databricks.com/glossary/medallion-architecture) — Databricks Glossary
 
