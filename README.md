@@ -36,7 +36,11 @@ Kafka is a crucial tool for data streaming, particularly in Big Data contexts, a
 
 ksqlDB is a database specifically designed for stream processing applications on top of Apache Kafka. It allows us to treat Kafka topics like traditional tables in relational databases, enabling SQL-like queries on streaming data. This makes it easier to process and analyze data in real-time.
 
+<<<<<<< HEAD
 ![](C:\Users\Mediamonster\Downloads\1.jpg)
+=======
+![1](https://github.com/user-attachments/assets/e88a12cc-09f5-4949-9c2b-c93a3b98c051)
+>>>>>>> 5096ae0cff20af843961a241351479b4667804ed
 
 ksqlDB's storage is based on two main structures: Streams and Tables.
 
