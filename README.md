@@ -6,7 +6,7 @@ These tools are used by major companies to improve their data processing abiliti
 
 I think the best way to learn these tools and test my ideas is by working on a real (or almost real) project. In this post, we will look at using ksqlDB (a tool related to Kafka) to make it easier to analyze road accident data, using real data from the Brazilian Federal Highway Police.
 
-We'll create a data pipeline inspired by the    **' Medallion Architecture'** to allow for ongoing (and possibly real-time) analysis of accident data.
+We'll create a data pipeline inspired by the    **Medallion Architecture** to allow for ongoing (and possibly real-time) analysis of accident data.
 
 Our goal is to learn more about data streaming, Kafka, and ksqlDB.
 
@@ -43,7 +43,7 @@ ksqlDB's storage is based on two main structures: Streams and Tables.
 
 **Streams** are similar to standard Kafka topics, functioning as immutable, append-only collections. They are essentially ever-growing lists of messages, making them suitable for representing historical sequences of events, such as bank transactions.
 
-**Tables**, in contrast, are mutable collections that represent the current state or snapshot of a dataset. They use primary keys to manage data. When a table receives messages, it updates to store only the latest value for each key, reflecting the most recent state.
+**Tables** in contrast, are mutable collections that represent the current state or snapshot of a dataset. They use  **primary keys** to manage data. When a table receives messages, it updates to store only the latest value for each key, reflecting the most recent state.
 
 ![2](https://github.com/user-attachments/assets/77745eff-9b8f-4e2d-bce3-f9772d4bb0a1)
 
