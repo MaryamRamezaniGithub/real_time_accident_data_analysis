@@ -6,7 +6,7 @@ These tools are used by major companies to improve their data processing abiliti
 
 I think the best way to learn these tools and test my ideas is by working on a real (or almost real) project. In this post, we will look at using ksqlDB (a tool related to Kafka) to make it easier to analyze road accident data, using real data from the Brazilian Federal Highway Police.
 
-We'll create a data pipeline inspired by the  Medallion Architecture to allow for ongoing (and possibly real-time) analysis of accident data.
+We'll create a data pipeline inspired by the    **Medallion Architecture** to allow for ongoing (and possibly real-time) analysis of accident data.
 
 Our goal is to learn more about data streaming, Kafka, and ksqlDB.
 
