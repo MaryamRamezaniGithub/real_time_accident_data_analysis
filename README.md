@@ -19,10 +19,11 @@ I first encountered this dataset during one of my course, and it proved to be a 
 
 Now, let's suppose the government wants to create better accident prevention policies. To do this, they need to answer the following questions:
 
-How many people are involved in accidents each month?
-What are the counts and percentages of people who are unhurt, lightly injured, severely injured, or dead each month?
-What are the percentages of people involved in accidents by gender each month?
-What is the death rate for each type of accident?
+1. How many people are involved in accidents each month?
+2. What are the counts and percentages of people who are unhurt, lightly injured, severely injured, or dead each month?
+3. What are the percentages of people involved in accidents by gender each month?
+4. What is the death rate for each type of accident?
+   
 However, waiting for the yearly report isn't feasible, so we need to set up an incremental report that updates in real-time by communicating with their internal database. This way, the results shown on dashboards will be updated as soon as new accidents are recorded.
 
 Since the data entered into the system may have similar issues as the released datasets, we need to clean and transform the records to make them useful for the final report.
