@@ -90,12 +90,23 @@ To set up the environment for this project, follow the instructions from the off
 
 - Place the downloaded connectors in the `/plugins` folder, which should be in the same directory as your `docker-compose` file.
 
-  Then, the containers can be started normally with *docker-compose up.*
+  Then, the containers can be started normally with
+```
+  docker-compose up
+```
 
 ![4](https://github.com/user-attachments/assets/b40ccbce-5c26-4567-b817-99bb37d657a8)
 
-After that, connect to the MongoDB shell with the command *mongo -u mongo -p mongo* inside the container and start the database with *rs.initiate()*.
+After that, connect to the MongoDB shell with the command
+```
+mongo -u mongo -p mongo
 
+```
+ inside the container and start the database with 
+ ```
+ rs.initiate()
+
+```
 ## Bronze Layer for Extracting the raw data
 
 The bronze layer stores the raw data extracted from the transactional environment, without any transformation or cleaning, just a *ctrl+c ctrl+v* process. In our case, this layer should extract information from the database where the accidents are originally registered.
