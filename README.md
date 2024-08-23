@@ -15,7 +15,7 @@ I hope you enjoy this project!
 # Problem
 The Brazilian Federal Highway Police (PRF) is responsible for monitoring the highways. Each year, they collect and release data on traffic accidents (under a CC BY-ND 3.0 License). This data includes information about the victims (age, gender, condition), weather conditions, time and location, causes, and effects of the accidents.
 
-I first encountered this dataset during an undergraduate course, and it proved to be a great learning resource for ETL (Extract, Transform, Load) processes. The dataset is rich in information but problematic in terms of formatting. It has many missing values, inconsistent data types, varying column formats, non-standardized values, typos, and other issues.
+I first encountered this dataset during one of my course, and it proved to be a great learning resource for ETL (Extract, Transform, Load) processes. The dataset is rich in information but problematic in terms of formatting. It has many missing values, inconsistent data types, varying column formats, non-standardized values, typos, and other issues.
 
 Now, let's suppose the government wants to create better accident prevention policies. To do this, they need to answer the following questions:
 
